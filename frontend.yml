@@ -1,4 +1,4 @@
-- name: Expense Frontend Setup
+- name: expense frontend setup
   hosts: all
   become: yes
   tasks:
@@ -28,6 +28,7 @@
     name: nginx
     state: restarted
     enabled: yes
+
 
 
 
