@@ -25,8 +25,8 @@
       ansible.builtin.file:
         path: /app
         state: directory
-    - name: Download and Extract app Content
-      ansible.builtin.file:
+    - name: Download and extract app content
+      ansible.builtin.unarchive:
         src: https://expense-artifacts.s3.amazonaws.com/backend.zip
         dest: /app
         remote_src: yes
