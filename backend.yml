@@ -30,11 +30,11 @@
         src: https://expense-artifacts.s3.amazonaws.com/backend.zip
         dest: /app
         remote_src: yes
-    - name: Download Nodejs Dependencies
+    - name: Download NodeJS Dependencies
       ansible.builtin.shell: npm install
       args:
         chDir: /app
-    - name: Install MySQL Clint
+    - name: Install MySQL Client
       ansible.builtin.dnf:
         name: mysql
         state: present
