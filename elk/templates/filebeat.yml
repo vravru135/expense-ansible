@@ -22,7 +22,7 @@ filebeat.inputs:
   - type: filestream
 
     # Unique ID among all inputs, an ID is required.
-    id: { component }
+    id: {{ component }}
 
     # Change to true to enable this input configuration.
     enabled: true
@@ -30,7 +30,6 @@ filebeat.inputs:
     # Paths that should be crawled and fetched. Glob based paths.
     paths:
       - {{ log_file }}
-      #- c:\programdata\elasticsearch\logs\*
 
     # Exclude lines. A list of regular expressions to match. It drops the lines that are
     # matching any regular expression from the list.
