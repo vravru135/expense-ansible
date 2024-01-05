@@ -4,6 +4,17 @@
     dest: /etc/yum.repos.d/elastic.repo
 
 - name: Install Filebeat
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: filebeat
     state: Installed
+
+- name: copy filebeat configuration
+  ansible.builtin.templates:
+    src: filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+
+- name: Restart Filebeat
+  ansible.builtin.systemd:
+     name: filebeat
+     state: restarted
+     enabled: yes
