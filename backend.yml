@@ -4,7 +4,8 @@
   tasks:
     - name: Disable NodeJS default version
       ansible.builtin.shell: dnf module disable nodejs -y
-
+    - name: Enable NodeJS 18 version
+      ansible.builtin.shell: dnf module enable nodejs:18 -y
     - name: Install NodeJS
       ansible.builtin.dnf:
         name: nodejs
@@ -30,14 +31,14 @@
         state: directory
 
     - name: Download and extract app content
-      ansible.builtin.file:
+      ansible.builtin.unarchive:
         src: https://expense-artifacts.s3.amazonaws.com/backend.zip
         dest: /app
         remote_src: yes
 
     - name: Download NodeJS Dependencies
-      ansible.builtin.shell:
-        args:
+      ansible.builtin.shell: npm install
+      args:
           chdir: /app
 
     - name: Install MySQL clint
