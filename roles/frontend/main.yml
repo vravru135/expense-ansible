@@ -26,3 +26,10 @@
         name: nginx
         state: restarted
         enabled: yes
+
+    - name: Import ELK Role - Filebeat
+      ansible.builtin.import_roles:
+        name: common
+        tasks_from: filebeat
+
+
