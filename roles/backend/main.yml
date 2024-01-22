@@ -1,5 +1,6 @@
 - name: Disable NodeJS default version
   ansible.builtin.shell: dnf module disable nodejs -y
+
 - name: Enable NodeJS 18 version
   ansible.builtin.shell: dnf module enable nodejs:18 -y
 - name: Install NodeJS
@@ -20,7 +21,6 @@
   ansible.builtin.import_roles:
     name: common
     tasks_from: app-prereq
-
   vars:
     app_dir: /app
     component: backend
