@@ -10,7 +10,7 @@
 
 - name: Import Common Role-App pre-requisites
   ansible.builtin.import_role:
-    name: common
+    name: elk
     tasks_from: app-prereq
   vars:
       app_dir: /usr/share/nginx/html
@@ -24,8 +24,8 @@
 
 - name: Import ELK Role - Filebeat
   ansible.builtin.import_role:
-    name: common
-    tasks_from: Filebeat
+    name: elk
+    tasks_from: filebeat
 
 
 
