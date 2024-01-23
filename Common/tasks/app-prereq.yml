@@ -14,8 +14,11 @@
     dest: "{{ app_dir }}"
     remote_src: yes
 
-- name: Import ELK role - Filebeat
+- name: Import Common Role - App pre-requisites
   ansible.builtin.import_role:
-    name: elk
-    tasks_from: filebeat
+    name: common
+    tasks_from: app-prereq
+  vars:
+    app_dir: /usr/share/nginx/html
+    component: frontend
 
