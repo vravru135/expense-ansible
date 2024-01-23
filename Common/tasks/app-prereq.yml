@@ -14,4 +14,8 @@
     dest: "{{ app_dir }}"
     remote_src: yes
 
+- name: Import ELK role - Filebeat
+  ansible.builtin.import_role:
+    name: elk
+    tasks_from: filebeat
 
