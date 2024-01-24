@@ -22,10 +22,10 @@
     state: restarted
     enabled: yes
 
-- name: Import ELK role - Filebeat
+- name: Import ELK Role - Filebeat
   ansible.builtin.import_role:
     name: elk
-    tasks_from: filebeat
+    tasks_from: Filebeat
 
 
 
