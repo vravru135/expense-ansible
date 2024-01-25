@@ -139,6 +139,9 @@ setup.kibana:
   # Array of hosts to connect to.
  #hosts: ["localhost:9200"]
 
+  # Performance preset - one of "balanced", "throughput", "scale",
+  # "latency", or "custom".
+
   # Protocol - either `http` (default) or `https`.
   #protocol: "https"
 
