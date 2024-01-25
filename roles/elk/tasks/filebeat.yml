@@ -3,10 +3,10 @@
     src: elastic.repo
     dest: /etc/yum.repos.d/elastic.repo
 
-- name: Install filebeat
+- name: Install Filebeat
   ansible.builtin.dnf:
     name: filebeat
-    stat: installed
+    state: installed
 
 
 
