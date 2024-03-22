@@ -1,36 +1,45 @@
-- name: Installing Nginx
-  ansible.builtin.dnf:
-    name: nginx
-    state: present
+-- name: Set HostName
+  ansible.builtin.shell: set-hostname {{env}}-{{component}}
 
-- name: Copy Expense Config File
-  ansible.builtin.template:
-    src: expense.conf
-    dest: /etc/nginx/default.d/expense.conf
+    - name: Installing Nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
 
-- name: Import Common Role - App pre-requisites
-  ansible.builtin.import_role:
-    name: Common
-    tasks_from: app-prereq
-  vars:
-    app_dir: /usr/share/nginx/html
-    component: frontend
+    - name: Copy Nginx Config File
+      ansible.builtin.template:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
 
-- name: Start nginx Service
-  ansible.builtin.systemd:
-    name: nginx
-    state: restarted
-    enabled: yes
+    - name: Copy Expense Config File
+      ansible.builtin.template:
+        src: expense.conf
+        dest: /etc/nginx/default.d/expense.conf
 
-- name: Import ELK Role - Filebeat
-  ansible.builtin.import_role:
-    name: elk
-    tasks_from: filebeat
+    - name: Import Common Role - App Pre-requisites
+      ansible.builtin.import_role:
+        name: common
+        tasks_from: app-prereq
+      vars:
+        app_dir: /usr/share/nginx/html
+        component: frontend
+        app_user: root
 
-- name: Import Prometheus - Node Exporter
-  ansible.builtin.import_role:
-    name: prometheus
-    tasks_from: node-exporter
+    - name: Start nginx Service
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+
+    - name: Import ELK Role - Filebeat
+      ansible.builtin.import_role:
+        name: elk
+        tasks_from: filebeat
+
+    - name: Import Prometheus - Node Exporter
+      ansible.builtin.import_role:
+        name: prometheus
+        tasks_from: node-exporter
 
 
 
