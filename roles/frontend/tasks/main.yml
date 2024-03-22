@@ -21,9 +21,9 @@
    name: common
    tasks_from: app-prereq
   vars:
-     app_dir: /usr/share/nginx/html
-     component: frontend
-     app_user: root
+   app_dir: /usr/share/nginx/html
+   component: frontend
+   app_user: root
 
 - name: Start nginx Service
   ansible.builtin.systemd:
