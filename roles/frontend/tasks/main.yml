@@ -3,11 +3,6 @@
    name: nginx
    state: present
 
-- name: Copy Nginx Config File
-  ansible.builtin.template:
-    src: nginx.conf
-    dest: /etc/nginx/nginx.conf
-
 - name: Copy Expense Config File
   ansible.builtin.template:
     src: expense.conf
@@ -20,7 +15,6 @@
   vars:
     app_dir: /usr/share/nginx/html
     component: frontend
-    app_user: root
 
 - name: Start nginx Service
   ansible.builtin.systemd:
@@ -33,10 +27,6 @@
     name: elk
     tasks_from: filebeat
 
-- name: Import Prometheus - Node Exporter
-  ansible.builtin.import_role:
-    name: prometheus
-    tasks_from: node-exporte
 
 
 

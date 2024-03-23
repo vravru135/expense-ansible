@@ -3,6 +3,7 @@
 
 - name: Enable NodeJS 18 version
   ansible.builtin.shell: dnf module enable nodejs:18 -y
+
 - name: Install NodeJS
   ansible.builtin.dnf:
     name: nodejs
