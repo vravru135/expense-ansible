@@ -1,27 +1,67 @@
-- name: Expense Frontend setup
+- name: Expense MySQL setup
   hosts: all
   become: yes
   tasks:
+    - name: Disable NodeJS default Version
+      ansible.builtin.shell: dnf module disable nodejs -y
 
-- name: Disable MySQL default version
-  ansible.builtin.shell: dnf module disable mysql -y
+    - name: Enable NodeJS 18 Version
+      ansible.builtin.shell: dnf module enable nodejs:18 -y
 
-- name: Copy MySQL Repo file
-  ansible.builtin.copy:
-    src: mysql.repo
-    dest: /etc/yum.repos.d/mysql.repo
+    - name: Install NodeJS
+      ansible.builtin.dnf:
+       name: nodejs
+       state: present
 
-- name: Install MySQL Server
-  ansible.builtin.dnf:
-    name: mysql-community-server
-    state: present
+    - name: Copy Backend Service File
+      ansible.builtin.template:
+       src: backend.service
+       dest: /etc/systemd/system/backend.service
 
-- name: start MySQL service
-  ansible.builtin.systemd:
-    name: mysql
-    state: restarted
-    enabled: yes
+    - name: Add Application User
+      ansible.builtin.user:
+       name: expense
 
-- name: Set MySQL Password
-  ansible.builtin.shell: mysql_secure_installation --set-root-pass {MYSQL_ROOT_PASSWORD}
+    - name: Delete old app Directory
+      ansible.builtin.file:
+        path: /app
+        state: absent
+
+    - name: Create App Directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: Download and extract app content
+      ansible.builtin.unarchive:
+        src: https://expense-artifacts.s3.amazonaws.com/backend.zip
+        dest: /app
+        remote_src: yes
+
+    - name: Download NodeJS Dependencies
+      ansible.builtin.shell: npm install
+      args:
+        chdir; /app
+
+    - name: Install MySQL Clint
+      ansible.builtin.dnf:
+        name: mysql
+        state: present
+
+    - name: Load Schema
+      ansible.builtin.shell: mysql -h mysql-dev.vravru135.online -uroot -p${{MYSQL_ROOT_PASSWORD}} < /app/schema/backend.sql &>>$log_file
+
+    - name: Start Backend Service
+      ansible.builtin.systemd:
+        name: backend
+        state: restarted
+        enabled: yes
+        daemon-reload: yes
+
+
+
+#- name: Download NodeJS Dependencies
+#  ansible.builtin.shell: npm install
+#  args:
+#    chdir: /app
 
