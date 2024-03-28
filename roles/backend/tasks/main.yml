@@ -9,7 +9,7 @@
     name: nodejs
     state: present
 
-- name: Copy Backend Service File
+- name: Copy backend service file
   ansible.builtin.template:
     src: backend.service
     dest: /etc/systemd/system/backend.service
