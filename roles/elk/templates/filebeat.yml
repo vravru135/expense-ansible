@@ -173,6 +173,7 @@ processors:
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
   - add_kubernetes_metadata: ~
+  - xpack.security.enabled: false
 
     # ================================== Logging ===================================
 
@@ -192,7 +193,6 @@ processors:
 
     # Set to true to enable the monitoring reporter.
     #monitoring.enabled: false
-    xpack.security.enabled: false
 
     # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
     # Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
