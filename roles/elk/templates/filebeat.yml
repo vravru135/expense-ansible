@@ -52,7 +52,6 @@ filebeat.inputs:
     fields:
        component: {{ component }}
 
-
 # ============================== Filebeat modules ==============================
 
 filebeat.config.modules:
