@@ -22,14 +22,14 @@ filebeat.inputs:
   - type: filestream
 
     # Unique ID among all inputs, an ID is required.
-    id: {{ component }}
+    id: frontend
 
     # Change to true to enable this input configuration.
     enabled: true
 
     # Paths that should be crawled and fetched. Glob based paths.
     paths:
-      - {{ log_file }}
+      - /var/log/nginx/access.log
 
     # Exclude lines. A list of regular expressions to match. It drops the lines that are
     # matching any regular expression from the list.
@@ -50,7 +50,7 @@ filebeat.inputs:
     # Optional additional fields. These fields can be freely picked
     # to add additional information to the crawled log files for filtering
     fields:
-      component: {{ component }}
+      component: frontend
 
 
 # ============================== Filebeat modules ==============================
@@ -233,3 +233,4 @@ processors:
 
 # This allows to enable 6.7 migration aliases
 #migration.6_to_7.enabled: true
+
